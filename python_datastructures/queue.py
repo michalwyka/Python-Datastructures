@@ -16,49 +16,72 @@ class Node:
 
 class Queue:
     def __init__(self):
-        self.__queue = DoublyLinkedList()
+        self._queue = DoublyLinkedList()
 
-    def getHead(self) -> T:
+    @classmethod
+    def from_array(cls, arr):
+        q = cls()
+        q._queue = DoublyLinkedList.from_array(arr)
+        return q
+
+    @property
+    def head_value(self) -> T:
 
         """View first element in the queue."""
 
-        return self.__queue.getHead()
+        return self._queue.head_value
 
-    def getTail(self):
+    @property
+    def tail_value(self):
 
         """View last element in the queue."""
 
-        return self.__queue.getTail()
+        return self._queue.tail_value
 
     def dequeue(self) -> T:
 
         """Remove element from the queue."""
 
-        return self.__queue.removeAtHead()
+        return self._queue.remove_first()
 
     def enqueue(self, value: T) -> None:
 
         """Add element to queue."""
 
-        self.__queue.addAtTail(value)
+        self._queue.add_back(value)
 
-    def getSize(self) -> int:
+    @property
+    def array(self) -> list:
+        return self._queue.array
+
+    @property
+    def size(self) -> int:
 
         """Get size of the queue."""
 
-        return self.__queue.getSize()
+        return self._queue.size
 
-    def isEmpty(self) -> bool:
+    @property
+    def is_empty(self) -> bool:
 
         """Check if queue is empty."""
 
-        return self.__queue.isEmpty()
+        return self._queue.is_empty
+
+    def __bool__(self) -> bool:
+        return not self.is_empty
+
+    def __len__(self) -> int:
+        return self.size
+
+    def __repr__(self) -> str:
+        return "Queue() size:{} in {}".format(self.size, __name__)
 
     def __str__(self) -> str:
 
         """Get string representation of the queue."""
 
-        return self.__queue.__str__()
+        return self._queue.__str__()
 
 
 if __name__ == "__main__":
